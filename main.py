@@ -303,7 +303,7 @@ def main():
             high_score = get_high_score(score, selected_mode)
             choice = post_game_menu(font,screen,score,high_score,lives)
             if choice == "menu":
-                selected_mode = main_menu()
+                selected_mode = main_menu(selected_mode)
                 paddle = Paddle()
                 score = 0
                 lives = 3
