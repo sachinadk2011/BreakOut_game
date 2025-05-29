@@ -4,6 +4,9 @@ import random
 from config import WIDTH, HEIGHT, FPS, WHITE, BLACK, RED, BRICK_COLORS 
 from menu import main_menu 
 from menu_after_game import post_game_menu
+import os
+from pathlib import Path
+
 
 # Initialize pygame
 pygame.init()
@@ -190,7 +193,11 @@ def main_menu_wrapper(score, selected_mode):
         return min(4 + score / 200, 8)
        
 def get_high_score(score, modes):
-    filename = f'High_score_{modes}.txt'
+    base_dir = Path(os.getenv('LOCALAPPDATA', Path.home())) / "Breakout"
+    base_dir.mkdir(parents=True, exist_ok=True)  # Create the folder if it doesn't exist
+
+    filename = base_dir / f'High_score_{modes}.txt'
+    
 
    # Try reading the existing high score
     try:
@@ -226,7 +233,8 @@ def main():
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                pygame.quit()
+                sys.exit()
         
         paddle.update()
         ball.update()
