@@ -158,16 +158,24 @@ def show_countdown(screen, font, paddle, ball, bricks, lives, score, mode):
 def lives_score_display(screen, font, lives, score, mode):
     # Render "Lives:" in white
     lives_label = font.render("Lives: ", True, WHITE)
+
+    
+    heart_rect = pygame.Rect(10 + lives_label.get_width(), 10, 100,lives_label.get_height())
+    pygame.draw.rect(screen, BLACK, heart_rect)
     # Draw lives and score
     heart = '\u2665'
+     
     lives_hearts = font.render(heart * lives, True, RED)
+    screen.blit(lives_hearts, (10 + lives_label.get_width(), 10))
+    
     mode_text = font.render(f"Mode: {mode}", True, WHITE)
     
     score_text = font.render(f"Score: {score}", True, WHITE)
     screen.blit(lives_label, (10, 10))
-    screen.blit(lives_hearts, (10 + lives_label.get_width(), 10))
     screen.blit(mode_text, (WIDTH // 2 -70, 10))
     screen.blit(score_text, (WIDTH - 150, 10))
+    
+
 
 def main_menu_wrapper(score, selected_mode):
 
@@ -249,7 +257,10 @@ def main():
         # Ball falls below screen
         if ball.rect.top > HEIGHT:
             lives -= 1
-            if lives <= 0:
+            if lives == 0:
+                lives_score_display(screen, font, lives, score, selected_mode)
+                
+
                 high_score = get_high_score(score, selected_mode)
                 choice = post_game_menu(font,screen,score,high_score, lives)
                 if choice == "menu":
@@ -295,8 +306,6 @@ def main():
         
 
         pygame.display.flip()
-
-    selected_mode
 
 if __name__ == "__main__":
     main()
