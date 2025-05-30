@@ -58,7 +58,10 @@ A modern Python remake of the classic BreakOut game, built with **Pygame**. Desi
    python main.py
 ✅ You can modify the source files (main.py, menu.py, menu_after_game.py, config.py) to customize the game.
 
- 🗒️ Notes
-This is an unofficial educational clone of the classic BreakOut game.
+ ### 🗒️ Notes:
+- This is an unofficial educational clone of the classic BreakOut game.
+- Built for personal use and learning under Code-In-Place-style guidance.
 
-Created for learning purposes during a Code-In-Place-style project.
+---
+
+👾 Happy playing!
