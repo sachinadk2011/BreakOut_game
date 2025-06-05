@@ -54,13 +54,17 @@ BRICK_HEIGHT = 20
 BRICK_GAP = 5
 brick_area_width = BRICKS_PER_ROW * BRICK_WIDTH + (BRICKS_PER_ROW - 1) * BRICK_GAP
 x_offset = (WIDTH - brick_area_width) // 2
-top_offset = int(HEIGHT * 0.05)  # 5% from top
+
 
 # Setup screen
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Power Breaker")
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("Arial", 24)
+# spacing between top text and brick
+text_height = font.get_height()
+min_gap = 20  # Adjust this if needed
+top_offset = text_height + min_gap
 
 # Classes
 class Paddle:
