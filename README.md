@@ -19,10 +19,9 @@ A modern Python remake of the classic BreakOut game, built with **Pygame**. Desi
 
 ## 🖼️ Screenshots
 
-| Menu | Option(Mode) | Countdown | Victory | Game Over |
+| Menu | Option(Mode) | Countdown | Game Over | Victory |
 |------|----------|-----------|-----------|---------|
-| ![Menu](https://github.com/user-attachments/assets/61f07512-d4fa-40f0-8d6a-7c33536e7b54) | ![Gameplay](https://github.com/user-attachments/assets/2e6dbd62-a934-425c-b586-cd7835f9cf8d) | ![Countdown](https://github.com/user-attachments/assets/0ccd5a57-4748-47b0-a852-e4e18ee2b44d) | ![GameOver](https://github.com/user-attachments/assets/d5d77e67-e8d8-459a-af75-373f9d236a33) | ![Win](https://github.com/user-attachments/assets/ba48834d-8cf7-445f-a7b4-b1f87ba62827) |
-
+| ![Menu](https://github.com/user-attachments/assets/61f07512-d4fa-40f0-8d6a-7c33536e7b54) | ![Gameplay](https://github.com/user-attachments/assets/2e6dbd62-a934-425c-b586-cd7835f9cf8d) | ![Countdown](https://github.com/user-attachments/assets/72de0f5d-6d42-4fec-8a30-8ca4d7404092)| ![GameOver](https://github.com/user-attachments/assets/51dffecf-66d5-4382-a59f-6386db26f5a1) | ![Win](https://github.com/user-attachments/assets/ffaa6e5c-f7af-431c-9e35-d0cfc0026b6b) |
 ---
 
 ## 💻 Requirements
