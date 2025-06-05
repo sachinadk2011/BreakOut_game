@@ -1,6 +1,11 @@
+
+
+
 # config.py
-WIDTH = 700
-HEIGHT = 800
+#WIDTH = 700
+#HEIGHT = 800
+WIDTH = None
+HEIGHT = None
 FPS = 60
 
 # Colors 

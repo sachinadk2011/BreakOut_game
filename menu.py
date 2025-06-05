@@ -1,10 +1,12 @@
 import pygame
 import sys
-from config import WIDTH, HEIGHT, FPS, WHITE, BLACK, RED , ORANGE, BRICK_COLORS
 import random
+
 
 pygame.init()
 
+
+from config import WIDTH, HEIGHT, FPS, WHITE, BLACK, RED , ORANGE, BRICK_COLORS
 CENTER = (WIDTH // 2 - 100, HEIGHT // 2 - 100)
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -60,7 +62,7 @@ def mode_menu(modes, current_mode):
                 mouse_pos = event.pos
                 for mode in modes:
                     if mode.rect.collidepoint(mouse_pos):
-                        print(f"Selected mode: {mode.text}")
+                        # print(f"Selected mode: {mode.text}")
                         return mode.text  # Exit the mode menu
 
         screen.fill(BLACK)

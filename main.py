@@ -1,9 +1,8 @@
 import pygame
 import sys
 import random
-from config import WIDTH, HEIGHT, FPS, WHITE, BLACK, RED, BRICK_COLORS 
-from menu import main_menu 
-from menu_after_game import post_game_menu
+import config
+from menu_after_game import post_game_menu, pause_menu
 import os
 from pathlib import Path
 
@@ -11,24 +10,51 @@ from pathlib import Path
 # Initialize pygame
 pygame.init()
 
+info = pygame.display.Info()
+config.WIDTH = int(info.current_w * 0.5)
+config.HEIGHT = int(info.current_h * 0.85)
+
+from config import WIDTH, HEIGHT,  FPS, WHITE, BLACK, RED, BRICK_COLORS 
+from menu import main_menu 
 
 
 
 
 
-# Paddle
+
+
+
+""" # Paddle
 PADDLE_WIDTH, PADDLE_HEIGHT = 80, 15
 PADDLE_Y = HEIGHT - 40
 
 # Ball
-BALL_RADIUS = 10
+BALL_RADIUS = 10 """
+
+# Reference dimensions
+BASE_WIDTH = 700
+BASE_HEIGHT = 800
+
+# Paddle (original: 80x15, Y = HEIGHT - 40)
+PADDLE_WIDTH = int(WIDTH * (80 / BASE_WIDTH))       # ~11.4%
+PADDLE_HEIGHT = int(HEIGHT * (15 / BASE_HEIGHT))    # ~1.875%
+PADDLE_Y = int(HEIGHT - (40 / BASE_HEIGHT) * HEIGHT)
+
+# Ball (original radius = 10)
+BALL_RADIUS = int(WIDTH * (10 / BASE_WIDTH))        # scale based on width
+
 
 # Brick
 BRICK_ROWS = 10
 BRICKS_PER_ROW = 10
 BRICK_WIDTH = (WIDTH - (BRICKS_PER_ROW + 1) * 5) / BRICKS_PER_ROW
+#BRICK_WIDTH = WIDTH // BRICKS_PER_ROW 
 BRICK_HEIGHT = 20
+#BRICK_HEIGHT = int(HEIGHT * 0.05)
 BRICK_GAP = 5
+brick_area_width = BRICKS_PER_ROW * BRICK_WIDTH + (BRICKS_PER_ROW - 1) * BRICK_GAP
+x_offset = (WIDTH - brick_area_width) // 2
+top_offset = int(HEIGHT * 0.05)  # 5% from top
 
 # Setup screen
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -126,16 +152,16 @@ def create_bricks():
     bricks = []
     for row in range(BRICK_ROWS):
         color = BRICK_COLORS[row % len(BRICK_COLORS)]
-        y = 50 + row * (BRICK_HEIGHT + BRICK_GAP)
+        y = top_offset + row * (BRICK_HEIGHT + BRICK_GAP)
         for col in range(BRICKS_PER_ROW):
-            x = BRICK_GAP + col * (BRICK_WIDTH + BRICK_GAP)
+            x = x_offset + col * (BRICK_WIDTH + BRICK_GAP)
             bricks.append(Brick(x, y, color))
     return bricks
 
-def show_countdown(screen, font, paddle, ball, bricks, lives, score, mode):
+def show_countdown(screen, font, paddle, ball, bricks, lives, score, mode, resume = "c"):
     countdown = [3, 2, 1, "Start"]
     count = len(countdown)
-    if lives < 3:
+    if lives < 3 or resume == "resume" :
         count = 3
     for i in range(count):
         screen.fill(BLACK)
@@ -159,24 +185,41 @@ def show_countdown(screen, font, paddle, ball, bricks, lives, score, mode):
         pygame.time.delay(1000)  # wait 1 second
 
 def lives_score_display(screen, font, lives, score, mode):
+    gap = WIDTH * 0.09  # 9% of screen width
     # Render "Lives:" in white
     lives_label = font.render("Lives: ", True, WHITE)
 
     
     heart_rect = pygame.Rect(10 + lives_label.get_width(), 10, 100,lives_label.get_height())
     pygame.draw.rect(screen, BLACK, heart_rect)
+    pause_text = font.render("Pause-p", True, WHITE)
+    exit_text = font.render("Exit-e", True, WHITE)
+
+    # Start positioning
+    x = 10
+    y = 10
     # Draw lives and score
     heart = '\u2665'
      
     lives_hearts = font.render(heart * lives, True, RED)
-    screen.blit(lives_hearts, (10 + lives_label.get_width(), 10))
-    
     mode_text = font.render(f"Mode: {mode}", True, WHITE)
-    
     score_text = font.render(f"Score: {score}", True, WHITE)
-    screen.blit(lives_label, (10, 10))
-    screen.blit(mode_text, (WIDTH // 2 -70, 10))
-    screen.blit(score_text, (WIDTH - 150, 10))
+    
+    screen.blit(lives_label, (x, y))
+    x+= lives_label.get_width()
+    
+    screen.blit(lives_hearts, (x, y))
+    x+= lives_hearts.get_width() + gap
+
+    screen.blit(pause_text, (x, y))
+    x+= pause_text.get_width() + gap
+    screen.blit(mode_text, (x, y))
+    x += mode_text.get_width() + gap
+
+    screen.blit(exit_text, (x, y))
+    x += exit_text.get_width() + gap
+
+    screen.blit(score_text, (x, y))
     
 
 
@@ -235,6 +278,14 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.KEYDOWN:
+                
+                if event.key == pygame.K_e:
+                    pygame.quit()
+                    sys.exit()
+                elif event.key == pygame.K_p:
+                    resume = pause_menu(screen, font)
+                    show_countdown(screen, font, paddle, ball, bricks, lives, score, selected_mode, resume)
         
         paddle.update()
         ball.update()
@@ -251,7 +302,7 @@ def main():
                 ball.y_vel = abs(ball.y_vel)   # bounce down
             # Ball hit the side
             else:
-                ball.x_vel *= -1               # reverse horizontal direction
+                ball.x_vel *= -1   # reverse horizontal direction
 
 
         # Ball and bricks collision
