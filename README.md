@@ -1,4 +1,4 @@
-# 🎮 BreakOut Clone – Version 1.1
+# 🎮 BreakOut Clone – Version 1.0
 
 A modern Python remake of the classic BreakOut game, built with **Pygame**. Designed for educational and project purposes, featuring smooth gameplay, dynamic ball speed, and user-friendly menus.
 
