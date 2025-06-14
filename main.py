@@ -3,7 +3,7 @@ import sys
 import random
 import config
 from menu_after_game import post_game_menu, pause_menu
-from lives_score_display_proportional import lives_score_display_proportional
+from lives_score_display_proportional import lives_score_display_proportional , get_proportional_font
 import os
 from pathlib import Path
 
@@ -11,34 +11,14 @@ from pathlib import Path
 # Initialize pygame
 pygame.init()
 
-# Accept WIDTH and HEIGHT from command line if passed
-if len(sys.argv) >= 3:
-    try:
-        config.WIDTH = int(sys.argv[1])
-        config.HEIGHT = int(sys.argv[2])
-    except ValueError:
-        pass  # fallback to default
-else:
-    info = pygame.display.Info()
-    config.WIDTH = int(info.current_w * 0.5)
-    config.HEIGHT = int(info.current_h * 0.85)
+
+info = pygame.display.Info()
+config.WIDTH = int(info.current_w * 0.5)
+config.HEIGHT = int(info.current_h * 0.85)
 
 from config import WIDTH, HEIGHT,  FPS, WHITE, BLACK, RED, BRICK_COLORS 
 from menu import main_menu 
 
-
-
-
-
-
-
-
-""" # Paddle
-PADDLE_WIDTH, PADDLE_HEIGHT = 80, 15
-PADDLE_Y = HEIGHT - 40
-
-# Ball
-BALL_RADIUS = 10 """
 
 # Reference dimensions
 BASE_WIDTH = 700
@@ -71,9 +51,11 @@ pygame.display.set_caption("Power Breaker")
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("Arial", 24)
 # spacing between top text and brick
-text_height = font.get_height()
+text_height = get_proportional_font().get_height()   # Adjusted for proportional font
+
 min_gap = 20  # Adjust this if needed
 top_offset = text_height + min_gap
+
 
 # Classes
 class Paddle:
