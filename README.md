@@ -52,8 +52,10 @@ A modern Python remake of the classic BreakOut game, built with **Pygame**. Desi
    git clone https://github.com/sachinadk2011/BreakOut_game.git
    cd BreakOut-Game
 2. Install dependencies using requirements.txt:
+    ```bash
    pip install -r requirements.txt
-3. Run the game:
+4. Run the game:
+    ```bash
    python main.py
 ✅ You can modify the source files (main.py, menu.py, menu_after_game.py, config.py) to customize the game.
 
