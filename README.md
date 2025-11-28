@@ -36,7 +36,7 @@ A modern Python remake of the classic BreakOut game, built with **Pygame**. Desi
 
 ### 🧩 From Executable (for players)
 
-1. Go to the [Releases](https://github.com/your-username/BreakOut-Clone/releases) section.
+1. Go to the [Releases](https://github.com/sachinadk2011/BreakOut_game/releases/tag/v1.2) section.
 2. Download the `Breakout.exe` file.
 3. Double-click to play — **no Python or setup required!**
 
